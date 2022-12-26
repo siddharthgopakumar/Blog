@@ -17,13 +17,13 @@ const db = mysql.createPool({
 dotenv.config();
 
 let transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
+  service: process.env.SERVICE,
+  host: process.env.HOST,
   port: 587,
   secure: false,
   auth: {
-    user: "blog.verfy@gmail.com",
-    pass: "bfjwxdcdtuuhhzbo",
+    user: process.env.PASS,
+    pass: process.env.PASS,
   },
 });
 
