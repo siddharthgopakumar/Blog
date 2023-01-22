@@ -1,0 +1,44 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Home
+        link(rel="stylesheet" href="/assets/css/style.css")
+    body 
+        //- navbarstart 
+        nav.navbar.navbar-expand-lg.bg-white.shadow.sticky-top.menu
+            .container 
+                a.navbar-brand(href="#") WBlog
+                button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarSupportedContent", aria-controls="navbarSupportedContent", aria-expanded="false", aria-label="Toggle navigation")
+                    span.navbar-toggler-icon
+                .collapse.navbar-collapse.justify-content-end#navbarSupportedContent
+                    ul.navbar-nav
+                        li.nav-item
+                            a.nav-link.active(aria-current="page", href="#") Home
+                        li.nav-item
+                            a.nav-link.active(aria-current="page", href="#") About us
+                        li.nav-item
+                            a.nav-link.active(aria-current="page", href="#") Lorem ipsum
+                    button.btn.btn-primary.d-none.d-lg-inline-block.rounded-pill(type="button", data-bs-toggle="modal", data-bs-target="#staticBackdrop") Get started
+        //- hero section start
+        section#home.hero-section.mt-5
+            .container
+                .row 
+                    .col-lg-6.hero-section-item.d-flex.flex-column.align-items-start.justify-content-between
+                        div
+                            h1.display-3 A Little Space To Share Your Ideas.
+                            p.lead Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eleifend metus eu eleifend finibus. Nam mi purus, scelerisque et nulla ac, egestas tempor sem. Pellentesque at purus hendrerit, imperdiet ligula non, suscipit odio.
+                        button.btn.btn-primary.rounded-pill(type="button", data-bs-toggle="modal", data-bs-target="#staticBackdrop") Start exploring
+                    .col-lg-6.hero-section-item.d-none.d-lg-block(style="background:#90A7FF")
+                        img.w-100.h-100(src="/assets/images/newpaper.png")
+        //- modal
+        .modal.fade#staticBackdrop(data-bs-backdrop="static", data-bs-keyboard="false", tabindex="-1", aria-labelledby="staticBackdropLabel", aria-hidden="true")
+            .modal-dialog.modal-dialog-centered.modal-lg
+                .modal-content
+                    .modal-header 
+                    .modal-body 
+                    .modal-footer 
+                        button.btn.btn-secondary.rounded-pill(type="button", data-bs-dismiss="modal") close    
+        script(src="/assets/js/bootstrap.bundle.js")
