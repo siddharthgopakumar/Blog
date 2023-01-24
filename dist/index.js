@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const api_1 = require("./src/routes/api");
+const verify_1 = require("./src/routes/verify");
 const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 var bodyParser = require("body-parser");
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
     res.render("home", { title: "Pug(u◉ᴥ◉)", message: "Hello World!" });
 });
 app.use("/api", api_1.apiRouter);
+app.use("/verify", verify_1.verifyRouter);
 app.listen(port, () => {
     console.log(path_1.default.join(__dirname, "../public"));
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

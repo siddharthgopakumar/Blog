@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import { apiRouter } from "./src/routes/api";
+import { verifyRouter } from "./src/routes/verify";
 import dotenv from "dotenv";
 import path from "path";
 var bodyParser = require("body-parser");
@@ -22,6 +23,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api", apiRouter);
+app.use("/verify", verifyRouter);
+
 
 app.listen(port, () => {
   console.log(path.join(__dirname, "../public"));

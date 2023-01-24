@@ -38,7 +38,28 @@ html(lang="en")
             .modal-dialog.modal-dialog-centered.modal-lg
                 .modal-content
                     .modal-header 
-                    .modal-body 
-                    .modal-footer 
-                        button.btn.btn-secondary.rounded-pill(type="button", data-bs-dismiss="modal") close    
+                        h5.modal-title Sign up 
+                        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+                    .modal-body.d-flex.flex-column.align-items-center
+                        form.needs-validation(novalidate)
+                            label.form-label(for="emailInput") Enter your email address to create an account 
+                            input.form-control#emailInput.mb-3(type="email", required)
+                            button.btn.btn-primary.rounded-pill#emailInputButton(type="submit") continue    
+                    .modal-footer
+        .modal.fade#signUpMailConfirmation(data-bs-backdrop="static", data-bs-keyboard="false", tabindex="-1", aria-labelledby="signUpMailConfirmationLabel", aria-hidden="true")
+            .modal-dialog.modal-dialog-centered.modal-lg
+                .modal-content
+                    .modal-header 
+                        h5.modal-title Confirm your email
+                        button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+                    .modal-body.d-flex.flex-column.align-items-center
+                        p Check the link we send to 
+                            span#putEmail
+                            .
+                                &nbsp;to complete your account set up.                                
+                            button.btn.btn-primary.rounded-pill#emailInputButton(type="submit") continue    
+                    .modal-footer
         script(src="/assets/js/bootstrap.bundle.js")
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        script(type="module", src="assets/js/home.js")
