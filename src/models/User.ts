@@ -1,6 +1,7 @@
 import db from "../configs/db";
 import mysql from "mysql2";
 import crypto from "crypto";
+import { Console } from "console";
 
 class User {
   [x: string]: any;
@@ -40,11 +41,11 @@ class User {
     const [newUserVerifyEntry, __] = await db.execute<any>(
       insert_query_verification
     );
-    
+
     return newUser;
   }
 
-  static async checkReturningUser(email: any) {
+  static async checkReturningUser(email: string) {
     const sqlCheckUserQuery = "SELECT * FROM users WHERE email = ?";
     const sql_check_query = mysql.format(sqlCheckUserQuery, email);
     const [rows, fields] = await db.query<any>(sql_check_query);
@@ -53,6 +54,24 @@ class User {
       const userData = rows[0];
       return { isReturningUser: true, userData };
     }
+  }
+
+  static async verifyUser(userId: string, hash: string) {
+    const getUserVerificationId =
+      "SELECT token FROM verification WHERE user_id = ?";
+    const sql_verify_user_query = mysql.format(getUserVerificationId, userId);
+    const [rows, _] = await db.query<any>(sql_verify_user_query);
+    return rows[0];
+  }
+
+  static async deleteVerificationEntry(userId: string) {
+    const dropVerificationRow = "DELETE FROM verification WHERE user_id = ?";
+    const sql_drop_verificationEntry = mysql.format(
+      dropVerificationRow,
+      userId
+    );
+    const [rows, _] = await db.query<any>(sql_drop_verificationEntry);
+    return rows;
   }
 
   isUserVerified = () => !!this.isUserVerified;

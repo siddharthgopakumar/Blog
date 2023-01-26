@@ -3,6 +3,6 @@ import { createNewUser } from "../controllers/UserAuthentication";
 
 const apiRouter = express.Router();
 
-apiRouter.route("/SignUp").get().post(createNewUser);
+apiRouter.route("/signup").get().post(createNewUser);
 
 export { apiRouter };

@@ -47,3 +47,13 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
 };
 
 export const signInUser = (req: Request, res: Response, next: any) => {};
+
+export const verifyUser = async (req: Request, res: Response, next: any) => {
+  const { userId, userHash: hash } = req.params;
+  const { token } = (await User.verifyUser(userId, hash)) || {};
+  if (Object.is(token, hash)) {
+    const deltetedRow = await User.deleteVerificationEntry(userId);
+    res.send(deltetedRow.affectedRows ? "user deleted" : "unable to delete");
+  }
+  res.send("unable to verify the user");
+};

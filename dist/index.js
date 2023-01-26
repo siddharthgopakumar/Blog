@@ -26,6 +26,5 @@ app.get("/", (req, res) => {
 app.use("/api", api_1.apiRouter);
 app.use("/verify", verify_1.verifyRouter);
 app.listen(port, () => {
-    console.log(path_1.default.join(__dirname, "../public"));
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });

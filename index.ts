@@ -27,6 +27,5 @@ app.use("/verify", verifyRouter);
 
 
 app.listen(port, () => {
-  console.log(path.join(__dirname, "../public"));
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
