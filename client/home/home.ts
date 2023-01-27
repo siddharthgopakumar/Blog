@@ -1,5 +1,6 @@
 import axios from "axios";
 declare var bootstrap: any;
+import '../../scss/style.scss';
 // use webpack and uncomment the above line
 
 (function () {
