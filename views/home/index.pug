@@ -5,7 +5,7 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible" content="IE=edge")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         title Home
-        link(rel="stylesheet", href="/assets/css/myuniquecss.css")
+        link(rel="stylesheet" href="/assets/css/home.css")
     body 
         //- navbarstart 
         nav.navbar.navbar-expand-lg.bg-white.shadow.sticky-top.menu
@@ -43,7 +43,7 @@ html(lang="en")
                     .modal-body.d-flex.flex-column.align-items-center
                         form.needs-validation(novalidate)
                             label.form-label(for="emailInput") Enter your email address to create an account 
-                            input.form-control#emailInput.mb-3(type="email", required)
+                            input.form-control#emailInput.mb-3(type="email" placeholder="Enter email" required)
                             button.btn.btn-primary.rounded-pill#emailInputButton(type="submit") continue    
                     .modal-footer
         .modal.fade#signUpMailConfirmation(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="signUpMailConfirmationLabel" aria-hidden="true")
@@ -53,10 +53,7 @@ html(lang="en")
                         h5.modal-title Confirm your email
                         button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
                     .modal-body.d-flex.flex-column.align-items-center
-                        p Check the link we send to 
-                            span#putEmail
-                            .
-                                &nbsp;to complete your account set up.                                
+                        p#signupConfirmationMessage                               
                         button.btn.btn-primary.rounded-pill#emailInputButton(type="button" data-bs-dismiss="modal") ok    
                     .modal-footer
         #render-react

@@ -1,7 +1,6 @@
 import axios from "axios";
 declare var bootstrap: any;
 import '../../scss/style.scss';
-// use webpack and uncomment the above line
 
 (function () {
   "use strict";
@@ -30,9 +29,9 @@ import '../../scss/style.scss';
             );
             closeModal.hide();
             const emailDiv = <HTMLSpanElement>(
-              document.querySelector("#putEmail")
+              document.querySelector("#signupConfirmationMessage")
             );
-            emailDiv.innerHTML = email;
+            emailDiv.innerHTML = `Check the link we have send to ${email} to complete your account set up.`;
             openModal.show();
           } catch (error) {
             console.log(error);

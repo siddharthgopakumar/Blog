@@ -7,6 +7,7 @@ const isProduction = process.env.NODE_ENV == "production";
 console.log(isProduction);
 
 const config = {
+  name: "home",
   entry: "./client/home/home.ts",
   output: {
     filename: "home.js",
@@ -22,7 +23,7 @@ const config = {
       {
         test: /\.(ts|tsx)$/i,
         loader: "ts-loader",
-        exclude: ["/node_modules/", "/src/", "/view/"],
+        exclude: ["/node_modules/", "/src/", "/views/"],
       },
       {
         test: /\.(sa|sc|c)ss$/,
@@ -31,7 +32,7 @@ const config = {
           "css-loader",
           "postcss-loader",
           "sass-loader",
-        ],
+        ]
       },
     ],
   },
@@ -42,7 +43,7 @@ const config = {
     ...(isProduction
       ? [
           new MiniCssExtractPlugin({
-            filename: "../css/myuniquecss.css",
+            filename: "../css/home.css",
           }),
         ]
       : []),

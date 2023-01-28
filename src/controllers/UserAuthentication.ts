@@ -22,6 +22,7 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
         is_verified: isVerified,
       } = userData;
       if (isVerified) {
+        res.status(400);
         res.send("please login");
       } else {
         const user = new User(
@@ -32,12 +33,14 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
           isVerified
         );
         user.resendVerificationMail();
+        res.status(200);
         res.send("resent verification mail");
       }
     } else {
       const tempFullname = email.split("@")[0];
       const user = new User(tempFullname, email, "", 0, 0);
       const newUser = await user.createNewUser();
+      res.status(201);
       res.send(newUser);
     }
   } catch (e) {
@@ -53,7 +56,11 @@ export const verifyUser = async (req: Request, res: Response, next: any) => {
   const { token } = (await User.verifyUser(userId, hash)) || {};
   if (Object.is(token, hash)) {
     const deltetedRow = await User.deleteVerificationEntry(userId);
-    res.send(deltetedRow.affectedRows ? "user deleted" : "unable to delete");
+    await User.toggleUserVerificationStatus(userId);
+    res.status(200);
+    res.send(deltetedRow.affectedRows ? "user verified" : "unable to delete");
+  } else {
+    res.status(406);
+    res.send("unable to verify the user");
   }
-  res.send("unable to verify the user");
 };

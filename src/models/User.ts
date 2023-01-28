@@ -74,6 +74,17 @@ class User {
     return rows;
   }
 
+  static async toggleUserVerificationStatus(userId: string) {
+    const recordUserVerification =
+      "UPDATE users SET is_verified = 1 WHERE id = ?";
+    const record_user_verification = mysql.format(
+      recordUserVerification,
+      userId
+    );
+    const [rows, _] = await db.query<any>(record_user_verification);
+    return rows;
+  }
+
   isUserVerified = () => !!this.isUserVerified;
 
   resendVerificationMail = () => console.log("resend verification mail");
