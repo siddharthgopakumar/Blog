@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
+import crypto from "crypto";
 
 export const checkReturningUser = async (
   req: Request,
@@ -40,6 +41,9 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
       const tempFullname = email.split("@")[0];
       const user = new User(tempFullname, email, "", 0, 0);
       const newUser = await user.createNewUser();
+      const userId = newUser?.["insertId"]; // insertId is returned by mysql after insertion.
+      const token = crypto.randomBytes(32).toString("hex");
+      await User.createVerificationForUser(userId, token);
       res.status(201);
       res.send(newUser);
     }
@@ -49,11 +53,39 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const signInUser = (req: Request, res: Response, next: any) => {};
+export const signInUser = async (req: Request, res: Response, next: any) => {
+  const email = req.body.email;
+  const userDetails = await User.getUserDetailsWithEmail(email);
+  console.log(Boolean(userDetails));
+  if (Boolean(userDetails)) {
+    const { id: userId, is_verified } = userDetails;
+    const isVerified = Boolean(is_verified);
+    const verificationToken = await User.getVerificationToken(userId);
+    if (Boolean(verificationToken)) {
+      if (isVerified) {
+        res.send("send sign in email with verification token");
+      } else {
+        res.send("send sign up email with verification token");
+      }
+    } else {
+      if (isVerified) {
+        res.send(
+          "create verification token and send sign in email with newly created verification token"
+        );
+      } else {
+        res.send(
+          "create verification token and send sign up email with newly created verification token"
+        );
+      }
+    }
+  } else {
+    res.send("user doesn't exist");
+  }
+};
 
 export const verifyUser = async (req: Request, res: Response, next: any) => {
   const { userId, userHash: hash } = req.params;
-  const { token } = (await User.verifyUser(userId, hash)) || {};
+  const { token } = (await User.getVerificationToken(userId)) || {};
   if (Object.is(token, hash)) {
     const deltetedRow = await User.deleteVerificationEntry(userId);
     await User.toggleUserVerificationStatus(userId);

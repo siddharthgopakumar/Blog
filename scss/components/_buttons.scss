@@ -1,0 +1,18 @@
+@use "../custom" as *;
+
+$transparent: transparent;
+
+@each $color, $value in $theme-colors {
+    .btn-text-#{$color} {
+        @include button-variant(
+            $transparent,
+            $transparent,
+            $value,
+            $transparent,
+            $transparent,
+            tint-color($value, 10%)
+            );
+        }
+    }
+    
+    

@@ -1,7 +1,5 @@
 import db from "../configs/db";
 import mysql from "mysql2";
-import crypto from "crypto";
-import { Console } from "console";
 
 class User {
   [x: string]: any;
@@ -30,8 +28,10 @@ class User {
       this.isVerified,
     ]);
     const [newUser, _] = await db.execute<any>(insert_query);
-    const userId = newUser?.["insertId"];
-    const token = await crypto.randomBytes(32).toString("hex");
+    return newUser;
+  }
+
+  static async createVerificationForUser(userId: number, token: string) {
     const createVerificationForUser =
       "INSERT INTO verification VALUES (0, ?, ?)";
     const insert_query_verification = mysql.format(createVerificationForUser, [
@@ -41,14 +41,13 @@ class User {
     const [newUserVerifyEntry, __] = await db.execute<any>(
       insert_query_verification
     );
-
-    return newUser;
+    return newUserVerifyEntry;
   }
 
   static async checkReturningUser(email: string) {
     const sqlCheckUserQuery = "SELECT * FROM users WHERE email = ?";
     const sql_check_query = mysql.format(sqlCheckUserQuery, email);
-    const [rows, fields] = await db.query<any>(sql_check_query);
+    const [rows, _] = await db.query<any>(sql_check_query);
     if (rows.length == 0) return { isReturningUser: false, userData: null };
     else {
       const userData = rows[0];
@@ -56,7 +55,7 @@ class User {
     }
   }
 
-  static async verifyUser(userId: string, hash: string) {
+  static async getVerificationToken(userId: string) {
     const getUserVerificationId =
       "SELECT token FROM verification WHERE user_id = ?";
     const sql_verify_user_query = mysql.format(getUserVerificationId, userId);
@@ -83,6 +82,13 @@ class User {
     );
     const [rows, _] = await db.query<any>(record_user_verification);
     return rows;
+  }
+
+  static async getUserDetailsWithEmail(email: string) {
+    const userDetails = "SELECT * FROM users WHERE email = ?";
+    const get_user_details = mysql.format(userDetails, email);
+    const [rows, _] = await db.query<any>(get_user_details);
+    return rows[0];
   }
 
   isUserVerified = () => !!this.isUserVerified;
