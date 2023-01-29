@@ -1,0 +1,94 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Home
+        link(rel="stylesheet" href="/assets/css/home.css")
+        link(rel="stylesheet" href="/assets/css/bootstrap-icons.css")
+    body 
+        //- navbarstart 
+        nav.navbar.navbar-expand-lg.bg-white.shadow.sticky-top.menu
+            .container 
+                a.navbar-brand(href="#") TechTales
+                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+                    span.navbar-toggler-icon
+                .collapse.navbar-collapse.justify-content-end#navbarSupportedContent
+                    ul.navbar-nav
+                        li.nav-item
+                            a.nav-link.active(aria-current="page" href="#") Home
+                        li.nav-item
+                            a.nav-link.active(aria-current="page" href="#") About us
+                        li.nav-item
+                            a.nav-link.active(aria-current="page" href="#") Lorem ipsum
+                    button.btn.btn-primary.d-none.d-lg-inline-block.rounded-pill(type="button" data-bs-toggle="modal" data-bs-target="#signUpOrSignIn") Get started
+        //- hero section start
+        section#home.hero-section.mt-5
+            .container
+                .row 
+                    .col-lg-6.hero-section-item.d-flex.flex-column.align-items-start.justify-content-between
+                        div
+                            h1.display-3 A Little Space To Share Your Ideas.
+                            p.lead.
+                                Welcome to TechTales - where we take a journey through the ever-evolving digital landscape.
+                                Our platform is designed for those who seek to expand their digital horizons,
+                                whether it be through gaining a deeper understanding of emerging technologies,
+                                discovering new ways to enhance their online presence, or learning from the experiences of others.
+                                Join us as we navigate the digital world and unlock the secrets to success
+                        button.btn.btn-primary.rounded-pill(type="button" data-bs-toggle="modal" data-bs-target="#signUpOrSignIn") Start exploring
+                    .col-lg-6.hero-section-item.d-none.d-lg-block(style="background:#90A7FF")
+                        img.w-100.h-100(src="/assets/images/newpaper.png")
+        //- modal
+        .modal#signUpOrSignIn(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="signUpOrSignIn" aria-hidden="true")
+            .modal-dialog.modal-dialog-centered.modal-lg
+                .modal-content
+                    .modal-header 
+                        h5.modal-title TechTales 
+                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                    .modal-body.d-flex.flex-column.align-items-center
+                        button.btn.btn-outline-secondary.rounded-pill.mb-3(type="button" data-bs-toggle="modal" data-bs-target="#signUpModal")
+                            span.me-3
+                                i.bi.bi-envelope
+                            .
+                                Sign up with email
+                        div.d-flex.align-items-center
+                            span Already have an account?
+                            button.btn.btn-text-primary(type="button" data-bs-toggle="modal" data-bs-target="#signInModal") Sign in
+                    .modal-footer
+        .modal#signUpModal(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="signUpModal" aria-hidden="true")
+            .modal-dialog.modal-dialog-centered.modal-lg
+                .modal-content  
+                    .modal-header 
+                        h5.modal-title Sign up 
+                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                    .modal-body.d-flex.flex-column.align-items-center
+                        form.needs-validation.d-flex.align-items-center.flex-column(novalidate data-tt-name="sign-up")
+                            label.form-label(for="emailInput") Enter your email address to create an account 
+                            input.form-control#emailInput.mb-3(type="email" placeholder="Enter email" required)
+                            button.btn.btn-primary.rounded-pill#emailInputButton(type="submit") continue    
+                    .modal-footer
+        .modal#signInModal(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="signInModal" aria-hidden="true" )
+            .modal-dialog.modal-dialog-centered.modal-lg
+                .modal-content  
+                    .modal-header 
+                        h5.modal-title Sign in 
+                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                    .modal-body.d-flex.flex-column.align-items-center
+                        form.needs-validation.d-flex.align-items-center.flex-column(novalidate data-tt-name="sign-in")
+                            label.form-label(for="emailInput") Enter your email address to receive sign in link
+                            input.form-control#emailInput.mb-3(type="email" placeholder="Enter email" required)
+                            button.btn.btn-primary.rounded-pill#emailInputButton(type="submit") continue    
+                    .modal-footer     
+        .modal#signUpMailConfirmation(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="signUpMailConfirmationLabel" aria-hidden="true")
+            .modal-dialog.modal-dialog-centered.modal-lg
+                .modal-content
+                    .modal-header 
+                        h5.modal-title Confirm your email
+                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                    .modal-body.d-flex.flex-column.align-items-center
+                        p#signupConfirmationMessage                               
+                        button.btn.btn-primary.rounded-pill#emailInputButton(type="button" data-bs-dismiss="modal") ok    
+                    .modal-footer
+        #render-react
+        script(src="/assets/js/bootstrap.bundle.js")
