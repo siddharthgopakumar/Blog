@@ -12,9 +12,11 @@ const configs = [
   {
     entry: { home: "./client/home/home.ts" },
     output: {
-      filename: isProduction ? "./assets/js/[name].[contenthash].js" : "./assets/js/[name].js",
+      filename: isProduction
+        ? "./assets/js/[name].[contenthash].js"
+        : "./assets/js/[name].js",
       path: path.resolve(__dirname, "public"),
-      // clean: true,
+      publicPath: "/",
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -28,8 +30,11 @@ const configs = [
   {
     entry: { feed: "./client/feed/index.tsx" },
     output: {
-      filename: isProduction ? "./assets/js/[name].[contenthash].js" : "./assets/js/[name].js",
-      path: path.resolve(__dirname, "/public/assets/js"),
+      filename: isProduction
+        ? "./assets/js/[name].[contenthash].js"
+        : "./assets/js/[name].js",
+      path: path.resolve(__dirname, "public"),
+      publicPath: "/",
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -56,7 +61,7 @@ module.exports = () => {
         ...(isProduction
           ? [
               new MiniCssExtractPlugin({
-                filename: "../css/home.css",
+                filename: "./assets/css/home.[contenthash].css",
               }),
             ]
           : []),
@@ -85,7 +90,14 @@ module.exports = () => {
             {
               test: /\.css$/,
               use: [
-                isProduction ? MiniCssExtractPlugin.loader : "style-loader",
+                isProduction
+                  ? {
+                      loader: MiniCssExtractPlugin.loader,
+                      options: {
+                        publicPath: "/",
+                      },
+                    }
+                  : "style-loader",
                 "css-loader",
               ],
             },
