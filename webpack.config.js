@@ -6,20 +6,20 @@ var HtmlWebpackPugPlugin = require("html-webpack-pug-plugin");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == "production";
-console.log(isProduction);
+console.log(path.resolve(__dirname, "public"));
 
 const configs = [
   {
     entry: { home: "./client/home/home.ts" },
     output: {
-      filename: isProduction ? "[name].[contenthash].js" : "[name].js",
-      path: path.resolve(__dirname, "public/assets/js"),
-      clean: true,
+      filename: isProduction ? "./assets/js/[name].[contenthash].js" : "./assets/js/[name].js",
+      path: path.resolve(__dirname, "public"),
+      // clean: true,
     },
     plugins: [
       new HtmlWebpackPlugin({
         template: "./templates/home/index.pug",
-        filename: "../../../views/home/index.pug",
+        filename: "../views/home/index.pug",
         minify: false,
       }),
       new HtmlWebpackPugPlugin(),
@@ -28,13 +28,13 @@ const configs = [
   {
     entry: { feed: "./client/feed/index.tsx" },
     output: {
-      filename: isProduction ? "[name].[contenthash].js" : "[name].js",
-      path: path.resolve(__dirname, "public/assets/js"),
+      filename: isProduction ? "./assets/js/[name].[contenthash].js" : "./assets/js/[name].js",
+      path: path.resolve(__dirname, "/public/assets/js"),
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "./templates/index.pug",
-        filename: "../../../views/feed/index.pug",
+        template: "./templates/feed/index.pug",
+        filename: "../views/feed/index.pug",
         minify: false,
       }),
       new HtmlWebpackPugPlugin(),

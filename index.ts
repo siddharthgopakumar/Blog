@@ -3,6 +3,7 @@ import { apiRouter } from "./src/routes/api";
 import { verifyRouter } from "./src/routes/verify";
 import dotenv from "dotenv";
 import path from "path";
+import { homeRouter } from "./src/routes/feed";
 var bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
@@ -25,6 +26,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api", apiRouter);
 app.use("/verify", verifyRouter);
 
+app.use("/feed", homeRouter);
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
