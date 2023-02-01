@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set("views", "./views");
 app.set("view engine", "pug");
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 app.use(express.static(path.join(__dirname, "../public")));
 

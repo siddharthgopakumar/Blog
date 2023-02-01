@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var HtmlWebpackPugPlugin = require("html-webpack-pug-plugin");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const HtmlCopyPlugin = require("copy-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == "production";
 console.log(path.resolve(__dirname, "public"));
@@ -13,10 +14,11 @@ const configs = [
     entry: { home: "./client/home/home.ts" },
     output: {
       filename: isProduction
-        ? "./assets/js/[name].[contenthash].js"
-        : "./assets/js/[name].js",
+        ? "./js/[name].[contenthash].js"
+        : "./js/[name].js",
       path: path.resolve(__dirname, "public"),
       publicPath: "/",
+      clean: true,
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -31,8 +33,8 @@ const configs = [
     entry: { feed: "./client/feed/index.tsx" },
     output: {
       filename: isProduction
-        ? "./assets/js/[name].[contenthash].js"
-        : "./assets/js/[name].js",
+        ? "./js/[name].[contenthash].js"
+        : "./js/[name].js",
       path: path.resolve(__dirname, "public"),
       publicPath: "/",
     },
@@ -43,6 +45,9 @@ const configs = [
         minify: false,
       }),
       new HtmlWebpackPugPlugin(),
+      new HtmlCopyPlugin({
+        patterns: [{ from: "assets", to: "assets" }],
+      }),
     ],
   },
 ];
@@ -61,7 +66,7 @@ module.exports = () => {
         ...(isProduction
           ? [
               new MiniCssExtractPlugin({
-                filename: "./assets/css/home.[contenthash].css",
+                filename: "./css/home.[contenthash].css",
               }),
             ]
           : []),
