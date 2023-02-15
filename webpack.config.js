@@ -7,7 +7,6 @@ const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const HtmlCopyPlugin = require("copy-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == "production";
-console.log(path.resolve(__dirname, "public"));
 
 const configs = [
   {
