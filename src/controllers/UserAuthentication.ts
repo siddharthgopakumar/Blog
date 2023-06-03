@@ -2,6 +2,12 @@ import { Request, Response } from "express";
 import { User } from "../models/User";
 import crypto from "crypto";
 
+declare module "express-session" {
+  export interface SessionData {
+    userid: string;
+  }
+}
+
 export const checkReturningUser = async (
   req: Request,
   res: Response,
@@ -90,9 +96,16 @@ export const verifyUser = async (req: Request, res: Response, next: any) => {
     const deltetedRow = await User.deleteVerificationEntry(userId);
     await User.toggleUserVerificationStatus(userId);
     res.status(200);
-    res.send(deltetedRow.affectedRows ? "user verified" : "unable to delete");
+    if (deltetedRow.affectedRows) {
+      const session = req.session;
+      session.userid = userId;
+      res.redirect("/feed");
+    } else {
+      res.send("unable to delete");
+    }
   } else {
     res.status(406);
     res.send("unable to verify the user");
   }
+  console.log("session details", req.session);
 };
