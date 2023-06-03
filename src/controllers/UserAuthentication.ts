@@ -107,5 +107,4 @@ export const verifyUser = async (req: Request, res: Response, next: any) => {
     res.status(406);
     res.send("unable to verify the user");
   }
-  console.log("session details", req.session);
 };

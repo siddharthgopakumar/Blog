@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import { apiRouter } from "./src/routes/api";
 import { verifyRouter } from "./src/routes/verify";
 import dotenv from "dotenv";
@@ -11,6 +11,7 @@ const MySQLStore = require("express-mysql-session")(session);
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const sendEmail = require("./src/utils/email");
+import { authenticateUser } from "./src/middleware";
 
 dotenv.config();
 
@@ -53,7 +54,12 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api", apiRouter);
 app.use("/verify", verifyRouter);
 
-app.use("/feed", homeRouter);
+app.use("/feed", authenticateUser, homeRouter);
+
+app.use("/logout", (req: Request, res: Response) => {
+  req.session.destroy((e) => console.log(e));
+  res.redirect("/");
+});
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
