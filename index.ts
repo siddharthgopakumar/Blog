@@ -8,9 +8,6 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 const MySQLStore = require("express-mysql-session")(session);
-const nodemailer = require("nodemailer");
-const crypto = require("crypto");
-const sendEmail = require("./src/utils/email");
 import { authenticateUser } from "./src/middleware";
 
 dotenv.config();
