@@ -3,11 +3,11 @@ import sgMail from "@sendgrid/mail";
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
 
 export const sentMail = (
-  sender: string,
-  recepient: string,
-  subject: string,
   email: string,
-  emailHTML: string
+  emailHTML: string,
+  recepient: string,
+  sender: string = "blog.verfy@gmail.com",
+  subject: string = "Verification",
 ) => {
   const msg = {
     to: recepient,

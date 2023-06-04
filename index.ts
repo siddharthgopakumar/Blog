@@ -15,14 +15,6 @@ dotenv.config();
 
 const oneDay = 1000 * 60 * 60 * 24;
 
-sentMail(
-  "blog.verfy@gmail.com",
-  "siddharthgopakumar54@gmail.com",
-  "First email sent using send grid",
-  "and easy to do anywhere, even with Node.js",
-  "<strong>and easy to do anywhere, even with Node.js</strong>"
-);
-
 const app: Express = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

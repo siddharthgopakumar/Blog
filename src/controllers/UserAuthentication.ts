@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import crypto from "crypto";
+import { sentMail } from "../utils";
 
 declare module "express-session" {
   export interface SessionData {
@@ -8,20 +9,13 @@ declare module "express-session" {
   }
 }
 
-export const checkReturningUser = async (
-  req: Request,
-  res: Response,
-  next: any
-) => {
-  res.send("Check if user already exists");
-};
-
 export const createNewUser = async (req: Request, res: Response, next: any) => {
   try {
     const { email } = req.body;
     const { isReturningUser, userData } = await User.checkReturningUser(email);
     if (isReturningUser) {
       const {
+        id: userId,
         full_name: fullName,
         email,
         password,
@@ -32,16 +26,12 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
         res.status(400);
         res.send("please login");
       } else {
-        const user = new User(
-          fullName,
-          email,
-          password,
-          isPasswordLogin,
-          isVerified
-        );
-        user.resendVerificationMail();
+        const { token } = await User.getVerificationToken(userId);
+        const emailMessageHtml = `<p>Click the following link to login<p><a target="_blank" href="http://localhost:8000/verify/${userId}/${token}">sign in link</a>`;
+        const emailMessage = `use this link to login http://localhost:8000/verify/${userId}/${token}`;
+        sentMail(emailMessage, emailMessageHtml, email);
         res.status(200);
-        res.send("resent verification mail");
+        res.send(`resent verification mail ${JSON.stringify(userData)}`);
       }
     } else {
       const tempFullname = email.split("@")[0];
@@ -50,6 +40,9 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
       const userId = newUser?.["insertId"]; // insertId is returned by mysql after insertion.
       const token = crypto.randomBytes(32).toString("hex");
       await User.createVerificationForUser(userId, token);
+      const emailMessageHtml = `<p>Click the following link to login<p><a target="_blank" href="http://localhost:8000/verify/${userId}/${token}">sign in link</a>`;
+      const emailMessage = `use this link to login http://localhost:8000/verify/${userId}/${token}`;
+      sentMail(emailMessage, emailMessageHtml, email);
       res.status(201);
       res.send(newUser);
     }
@@ -62,27 +55,25 @@ export const createNewUser = async (req: Request, res: Response, next: any) => {
 export const signInUser = async (req: Request, res: Response, next: any) => {
   const email = req.body.email;
   const userDetails = await User.getUserDetailsWithEmail(email);
-  console.log(Boolean(userDetails));
   if (Boolean(userDetails)) {
-    const { id: userId, is_verified } = userDetails;
+    const { id: userId, email: userEmail, is_verified } = userDetails;
     const isVerified = Boolean(is_verified);
     const verificationToken = await User.getVerificationToken(userId);
     if (Boolean(verificationToken)) {
-      if (isVerified) {
-        res.send("send sign in email with verification token");
-      } else {
-        res.send("send sign up email with verification token");
-      }
+      const { token } = verificationToken;
+      const emailMessageHtml = `<p>Click the following link to login<p><a target="_blank" href="http://localhost:8000/verify/${userId}/${token}">sign in link</a>`;
+      const emailMessage = `use this link to login http://localhost:8000/verify/${userId}/${token}`;
+      sentMail(emailMessage, emailMessageHtml, userEmail);
+      res.send(userDetails); // "send sign in email with verification token"
     } else {
-      if (isVerified) {
-        res.send(
-          "create verification token and send sign in email with newly created verification token"
-        );
-      } else {
-        res.send(
-          "create verification token and send sign up email with newly created verification token"
-        );
-      }
+      const token = crypto.randomBytes(32).toString("hex");
+      await User.createVerificationForUser(userId, token);
+      const emailMessageHtml = `<p>Click the following link to login<p><a target="_blank" href="http://localhost:8000/verify/${userId}/${token}">sign in link</a>`;
+      const emailMessage = `use this link to login http://localhost:8000/verify/${userId}/${token}`;
+      sentMail(emailMessage, emailMessageHtml, userEmail);
+      res.send(
+        `create verification token(${token}) and send sign in email with newly created verification token. user id(${userId})`
+      );
     }
   } else {
     res.send("user doesn't exist");

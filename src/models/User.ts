@@ -92,8 +92,6 @@ class User {
   }
 
   isUserVerified = () => !!this.isUserVerified;
-
-  resendVerificationMail = () => console.log("resend verification mail");
 }
 
 export { User };
