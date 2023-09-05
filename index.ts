@@ -1,4 +1,10 @@
-import express, { Express, NextFunction, Request, Response } from "express";
+import express, {
+  Express,
+  NextFunction,
+  Request,
+  Response,
+  response,
+} from "express";
 import { apiRouter } from "./src/routes/api";
 import { verifyRouter } from "./src/routes/verify";
 import dotenv from "dotenv";
@@ -46,7 +52,7 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-  res.render("home");
+  res.render("home", { loggedIn: Boolean(req.session.userid) });
 });
 
 app.use("/api", apiRouter);

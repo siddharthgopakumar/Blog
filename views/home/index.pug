@@ -22,7 +22,8 @@ html(lang="en")
                             a.nav-link.active(aria-current="page" href="#") About us
                         li.nav-item
                             a.nav-link.active(aria-current="page" href="#") Lorem ipsum
-                    button.btn.btn-primary.d-none.d-lg-inline-block.rounded-pill(type="button" data-bs-toggle="modal" data-bs-target="#signUpOrSignIn") Get started
+                    if !loggedIn 
+                        button.btn.btn-primary.d-none.d-lg-inline-block.rounded-pill(type="button" data-bs-toggle="modal" data-bs-target="#signUpOrSignIn") Get started
         //- hero section start
         section#home.hero-section.mt-5
             .container
@@ -36,7 +37,8 @@ html(lang="en")
                                 whether it be through gaining a deeper understanding of emerging technologies,
                                 discovering new ways to enhance their online presence, or learning from the experiences of others.
                                 Join us as we navigate the digital world and unlock the secrets to success
-                        button.btn.btn-primary.rounded-pill(type="button" data-bs-toggle="modal" data-bs-target="#signUpOrSignIn") Start exploring
+                        if !loggedIn
+                            button.btn.btn-primary.rounded-pill(type="button" data-bs-toggle="modal" data-bs-target="#signUpOrSignIn") Start exploring
                     .col-lg-6.hero-section-item.d-none.d-lg-block(style="background:#90A7FF")
                         img.w-100.h-100(src="/assets/images/newpaper.png")
         //- modal
