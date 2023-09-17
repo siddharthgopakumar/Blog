@@ -15,7 +15,6 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 const MySQLStore = require("express-mysql-session")(session);
 import { authenticateUser } from "./src/middleware";
-import { sentMail } from "./src/utils";
 
 dotenv.config();
 
@@ -64,6 +63,10 @@ app.use("/logout", (req: Request, res: Response) => {
   req.session.destroy((e) => console.log(e));
   res.redirect("/");
 });
+
+app.use("/draft", (req: Request, res: Response) => {
+  res.render("draft");
+})
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

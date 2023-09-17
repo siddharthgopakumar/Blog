@@ -49,6 +49,27 @@ const configs = [
       }),
     ],
   },
+  {
+    entry: { draft: "./client/draft/index.ts" },
+    output: {
+      filename: isProduction
+        ? "./js/[name].[contenthash].js"
+        : "./js/[name].js",
+      path: path.resolve(__dirname, "public"),
+      publicPath: "/",
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: "./templates/draft/index.pug",
+        filename: "../views/draft/index.pug",
+        minify: false,
+      }),
+      new HtmlWebpackPugPlugin(),
+      new HtmlCopyPlugin({
+        patterns: [{ from: "assets", to: "assets" }],
+      }),
+    ],
+  },
 ];
 
 module.exports = () => {

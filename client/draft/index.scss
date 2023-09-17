@@ -1,0 +1,39 @@
+body {
+  overflow-y: scroll;
+}
+
+.codex-editor {
+  &.codex-editor--empty {
+    .codex-editor__redactor {
+      :nth-child(2)[data-id="first"] {
+        .ce-block__content {
+          .ce-paragraph {
+            &[data-placeholder]:empty::before {
+              opacity: 1;
+            }
+          }
+        }
+        &.ce-block--focused {
+          .ce-block__content {
+            .ce-paragraph {
+              &[data-placeholder]:empty::before {
+                opacity: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .codex-editor__redactor {
+    :not(:nth-of-type(1)) {
+      .ce-block__content {
+        .ce-header {
+          &[data-placeholder]:empty::before {
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+}

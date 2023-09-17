@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Draft
+        link(rel="stylesheet" href="/assets/bootstrap-css/bootstrap-icons.css")
+    body 
+        //- navbarstart 
+        nav.navbar.navbar-expand-lg.bg-white.shadow.sticky-top.menu
+            .container 
+                a.navbar-brand(href="#") TechTales
+                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+                    span.navbar-toggler-icon
+                .collapse.navbar-collapse.justify-content-end#navbarSupportedContent
+                    ul.navbar-nav
+                        li.nav-item
+                            a.nav-link.active(aria-current="page" href="#") Home
+                        li.nav-item
+                            a.nav-link.active(aria-current="page" href="#") About us
+                        li.nav-item
+                            a.nav-link.active(aria-current="page" href="#") Lorem ipsum
+        #editorjs
+        script(src="/assets/bootstrap/bootstrap.bundle.js")
